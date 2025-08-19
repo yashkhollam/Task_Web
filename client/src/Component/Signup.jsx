@@ -18,7 +18,7 @@ function Signup() {
 
   const handleinput=async(e)=>{
     const {name,value}=e.target
-   console.log({...input,[name]:value})
+  //  console.log({...input,[name]:value})
    setinput({...input,[name]:value})
   }
 
@@ -41,14 +41,14 @@ function Signup() {
 
   }
   catch(err){
-    console.log(err)
+    // console.log(err)
 
     const message=err?.response?.data[0]?.message
-   console.log(message)
-   
-  //   toast(message,{
-  //     icon:"⚠️"
-  //   })
+  //  console.log(message)
+
+    toast.error(message,{
+      icon:"⚠️"
+    })
    }
   }
 

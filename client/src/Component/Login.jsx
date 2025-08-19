@@ -18,7 +18,7 @@ function Login() {
 
   const handleinput=(e)=>{
   const {name,value}=e.target
-  console.log({...input,[name]:value})
+  // console.log({...input,[name]:value})
   setInput({...input,[name]:value})
   }
 
@@ -34,9 +34,9 @@ function Login() {
 
 
       
-      console.log(response.data)
+      // console.log(response.data)
       const {message,jwt_token,username}=response.data;
-      console.log(jwt_token,username)
+      // console.log(jwt_token,username)
 
       localStorage.setItem('username',username);
       localStorage.setItem('token',jwt_token);
@@ -48,8 +48,8 @@ function Login() {
        navigate('/home')
     }
     catch(err){
-     console.log(err)
-      // toast.error(err.response.data[0].message)
+    //  console.log(err)
+       toast.error(err?.response.data[0].message)
     }
   }
 

@@ -35,7 +35,7 @@ function Home() {
       }
     })
 
-    console.log(response.data.data)
+    // console.log(response.data.data)
 
     setTask(response.data.data)
     return(response.data.data)
@@ -43,7 +43,8 @@ function Home() {
     
   }
   catch(err){
-    console.log(err)
+    // console.log(err)
+    toast.error(err?.message.data[0].message)
   }
 }
 
@@ -56,7 +57,7 @@ useEffect(()=>{
 //create task
 
   const handleinput=(e)=>{
-    console.log({...iscreateTask,[e.target.name]:e.target.value})
+    // console.log({...iscreateTask,[e.target.name]:e.target.value})
     issetCreateTask({...iscreateTask,[e.target.name]:e.target.value})
   }
 
@@ -84,7 +85,7 @@ useEffect(()=>{
     await fetchtask()
   }
   catch(err){
-    console.log(err)
+    // console.log(err)
   
      toast(err.response?.data.message,{
     icon:"⚠️" 
@@ -112,7 +113,8 @@ const  openedit=async(id)=>{
    
 }
     catch(err){
-      console.log(err)
+      // console.log(err)
+      toast.error(err?.message.data[0].message)
     }
   }
 
@@ -124,7 +126,7 @@ const handleupdate=(e)=>{
     setIsupdateTask({...isupdateTask,[e.target.name]:e.target.value})
   }
   catch(err){
-    console.log(err)
+   toast.error(err?.message.data[0].message)
   }
 }
 
@@ -141,7 +143,7 @@ const submitupdatedata=async(e)=>{
    await fetchtask()
  }
  catch(err){
-  console.log(err)
+  toast.error(err?.message.data[0].message)
  }
 }
 
@@ -164,7 +166,8 @@ const submitupdatedata=async(e)=>{
        toast.success(message)
     }
     catch(err){
-      console.log(err)
+      // console.log(err)
+      toast.error(err?.message.data[0].message)
      
     }
   
