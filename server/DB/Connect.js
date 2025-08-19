@@ -10,6 +10,7 @@ const ConnectMD=async(req,res)=>{
     }
 
     catch(err){
+        
         console.log("Failed to connect MongoDB atlas",err)
     }
 }

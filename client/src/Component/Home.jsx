@@ -211,15 +211,19 @@ const submitupdatedata=async(e)=>{
         value={iscreateTask.task}/>
 
 
-
+      <div className="input-container d-flex align-items-center gap-2">
+        <span className="d-inline d-md-none ms-2" style={{fontSize:"1.6rem"}}>📅</span>
         <input type="date"
          required
-         className='form-control'  style={{height:"50px", width:"170px"}}
+         placeholder='Add the Deadline'
+         className='form-control' 
+          style={{height:"50px", width:"170px"}}
           onChange={handleinput}
           name='deadline'
           
           value={iscreateTask.deadline}
           />
+        </div>
 
          <button className='btn bg-success text-light h-100 fs-4 p-2' type='button' onClick={createtask}>Create</button>
 
