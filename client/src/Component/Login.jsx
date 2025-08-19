@@ -25,8 +25,8 @@ function Login() {
   const submitform=async(e)=>{
     e.preventDefault()
     try{
-       const response=await axios.post("http://localhost:8989/auth/login",input)
-      
+      //  const response=await axios.post("http://localhost:8989/auth/login",input)
+       const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`,input)
 
 
 

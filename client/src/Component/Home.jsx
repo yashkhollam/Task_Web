@@ -26,7 +26,9 @@ function Home() {
   //fetch the task
      const fetchtask=async()=>{
   try{
-     const response=await axios.get(`http://localhost:8989/task/gettaskbyuserID`,{
+    //  const response=await axios.get(`http://localhost:8989/task/gettaskbyuserID`,{
+
+    const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/task/gettaskbyuserID`,{
     
       headers:{
         Authorization:`Bearer ${auth.token}`
@@ -65,7 +67,10 @@ useEffect(()=>{
     try{
     
     const token= localStorage.getItem('token')
-    const response= await axios.post(`http://localhost:8989/task/create`,iscreateTask,{
+    // const response= await axios.post(`http://localhost:8989/task/create`,iscreateTask,{
+   
+    const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/task/create`,iscreateTask,{
+
     headers:{
       Authorization:`Bearer ${token}`,
     }
@@ -96,7 +101,9 @@ const  openedit=async(id)=>{
         setIseditdialogopen(!iseditdialogopen)
         setIseditid(id)
 
-           const response=await axios.get(`http://localhost:8989/task/gettaskbyID/${id}`)
+          //  const response=await axios.get(`http://localhost:8989/task/gettaskbyID/${id}`)
+
+          const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/task/gettaskbyID/${id}`)
 
   const data=response.data.data;
   setIsupdateTask({task:data.task,deadline:data.deadline})
@@ -125,7 +132,9 @@ const submitupdatedata=async(e)=>{
   e.preventDefault()
  
  try{
-     await axios.patch(`http://localhost:8989/task/updatedtask/${editID}`,isupdateTask)
+    //  await axios.patch(`http://localhost:8989/task/updatedtask/${editID}`,isupdateTask)
+
+    const response= await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/task/updatedtask/${editID}`,isupdateTask)
 
    toast.success("update successfully")
    setIseditdialogopen(false)//close dialog
@@ -146,8 +155,8 @@ const submitupdatedata=async(e)=>{
 
   const deletetask=async(taskid)=>{
     try{
-       const response= await axios.delete(`http://localhost:8989/task/deletetask/${taskid}`)
-      
+      //  const response= await axios.delete(`http://localhost:8989/task/deletetask/${taskid}`)
+       const response= await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/task/deletetask/${taskid}`)
 
        setTask(prev=>prev.filter((item)=>item._id!==taskid))
        
