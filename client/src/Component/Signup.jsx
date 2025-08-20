@@ -87,6 +87,7 @@ isloading&&
              <label className='form-label mt-2' style={{fontSize:"1.3rem"}}>Email :</label>
            <input type="email"
                   name="email"
+                  
                   value={input.email}
                    onChange={handleinput}
                   className='form-control' />
