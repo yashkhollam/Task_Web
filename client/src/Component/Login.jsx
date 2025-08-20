@@ -8,23 +8,27 @@ import { AuthContext } from './ContextProvider'
 
 function Login() {
  const {setAuth}=useContext(AuthContext)
+ const [isloading,setIsloading]=useState(false)
   const navigate=useNavigate()
   const data={
     email:"",
     password:""
   }
 
+
   const[input,setInput]=useState(data)
 
   const handleinput=(e)=>{
   const {name,value}=e.target
-  // console.log({...input,[name]:value})
+  
   setInput({...input,[name]:value})
   }
 
   const submitform=async(e)=>{
     e.preventDefault()
     try{
+
+       setIsloading(true)
       //  const response=await axios.post("http://localhost:8989/auth/login",input)
        const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`,input)
 
@@ -34,9 +38,9 @@ function Login() {
 
 
       
-      // console.log(response.data)
+    
       const {message,jwt_token,username}=response.data;
-      // console.log(jwt_token,username)
+    
 
       localStorage.setItem('username',username);
       localStorage.setItem('token',jwt_token);
@@ -46,30 +50,47 @@ function Login() {
       setInput({email:"",password:""})
       setAuth({username:username,token:jwt_token})
        navigate('/home')
+        
     }
     catch(err){
-    //  console.log(err)
-       toast.error(err?.response.data[0].message)
+      const message=err?.response?.data?.message
+        toast(message,{
+          icon:"⚠️"
+        })
+         setIsloading(false)
+      
     }
   }
 
-  // const gotosignup=()=>{
-  //  navigate('/signup')
-  
-  // }
+ 
 
   return (
-    <div className="container min-vh-100 d-flex justify-content-center align-items-center">
+<>
+
+{
+
+isloading&&
+ <div id='spinner-container'>
+    
+    <div class="spinner-border" role="status" id='spinner'></div>
+
+ </div>
+}
+    <div className="container" id='container'>
       
-      <div className="row shadow w-100" style={{minHeight:"450px",maxWidth:"500px",marginBottom:"150px"}}>
+      <div className="row shadow rounded w-100 mt-5" style={{minHeight:"450px",maxWidth:"400px",marginBottom:"150px"}}>
        
-        <div className="col-12 ">
-          <form className='form p-3' onSubmit={submitform}>
+        <div className="col-12 p-0 m-0">
+
+        
+
+          <form className='form p-3 ' onSubmit={submitform}>
             <h1 className='text-center  p-4'>Login</h1>
            
             <label style={{fontSize:"1.3rem"}}>Email :</label>
             <input type="email"
              name="email"
+            
              className='form-control mt-2'
              value={input.email}
              onChange={handleinput} />
@@ -77,6 +98,7 @@ function Login() {
             <label className="mt-3" style={{fontSize:"1.3rem"}} >Password :</label>
             <input type="password"
              name="password"
+            
               className='form-control mt-2'
              value={input.password}
              onChange={handleinput} />
@@ -89,6 +111,8 @@ function Login() {
         </div>
       </div>
     </div>
+
+    </>
   )
 }
 

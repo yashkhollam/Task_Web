@@ -1,99 +1,37 @@
-/* 
+*{
+padding: 0;
+margin:0;
+box-sizing: border-box;
+}
+
+
 #navbar{
-    width:100%;
-}
-
-.group-items{
-    display: flex;
-    align-items: center;
-    height:50px;
-    list-style-type:none;
-    justify-content:center;
-}
-
-.group-items div li{
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-
-.logout{
-    position: absolute;
-    margin-left:80%;
-    font-size:1.4rem;
-} */
-
-
-#form-container{
-    width:100%;
-    
-    padding: 0;
-    margin: 0;
     height: 50px;
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    background-color: beige;
+    box-shadow: 5px 0 3px black;
 }
-
-#row{
-     padding: 0;
-    margin: 0;
-  width:100%;
-  height: 100%;
-}
-
-#column{
-  padding: 0;
-    margin: 0;
-} 
-
-
-
-#navbar{
-    background-color:antiquewhite;
-     width:100%; 
-    height:100%;
-    position: relative;
-}
-
 
 #nav-group{
-   width:100%;
-   height:100%;
-  
-   list-style-type:none;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-  
-   gap: 20px;
-
-
-}
-
-
-#nav-container{
+    width: 100% !important;
+    list-style-type: none;
+   
+    justify-content: center;
+    align-items: center;
+    font-size:1.2rem;
+    font-weight: bold;
     
-   display: flex;
-    
-    font-size: 1.3rem;
-   font-weight: bold;
-}
-#logout-icon {
-    position: absolute;
-     right: 20px;
-    font-size: 2rem;
-    cursor: pointer;
- 
 }
 
 #logout{
-   display: flex;
-  align-items: center; 
-padding:0 40px;
-
-  
+    display: flex;
+    align-items: center;
 }
 
-@media only screen and (max-width: 720px) {
-    #logout-icon {
-        right: 10px; /* Move closer to edge on small screens */
-        font-size: 1.5rem; /* Slightly smaller icon for mobile */
-    }
+#logout-icon{
+    font-size: 1.7rem;
+    position: absolute;
+    right: 20px;
 }

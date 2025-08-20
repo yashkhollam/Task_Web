@@ -198,29 +198,30 @@ const submitupdatedata=async(e)=>{
   return (
    <>
 
-  <div className="container mt-2" >
+  <div className="container mt-0 " >
     <div className="row " >
       <div className="col-12  " id='col-container'>
        
-       <div className='input-container ' id='input-container'>
+       <div className='input-container d-flex gap-3' id='input-container'>
 
        
         <input type="text" 
        
         placeholder='Add the Task'
-        className='form-control p-3' style={{height:"50px",maxWidth:"500px"}}
+        className='form-control p-3' style={{height:"40px",maxWidth:"500px"}}
         onChange={handleinput}
         name='task'
         value={iscreateTask.task}/>
 
 
-      <div className="input-container d-flex align-items-center gap-2">
-        <span className="d-inline d-md-none ms-2" style={{fontSize:"1.6rem"}}>📅</span>
+      <div className="input-container-date d-flex  gap-2">
+        <span className="d-inline d-md-none " style={{fontSize:"1.6rem"}}>📅</span>
+     
         <input type="date"
          required
          placeholder='Add the Deadline'
-         className='form-control' 
-          style={{height:"50px", width:"170px"}}
+         className='form-control p-3' 
+          style={{height:"40px", maxWidth:"150px"}}
           onChange={handleinput}
           name='deadline'
           
@@ -228,7 +229,7 @@ const submitupdatedata=async(e)=>{
           />
         </div>
 
-         <button className='btn bg-success text-light h-100 fs-4 p-2' type='button' onClick={createtask}>Create</button>
+         <button className='btn' type='button' id='createbtn' onClick={createtask}>Create</button>
 
 
        </div> 
@@ -266,10 +267,10 @@ const submitupdatedata=async(e)=>{
                  
                 
                  
-                  <button className='btn bg-warning' onClick={()=>{openedit(data._id)}}>Edit</button>
+                  <button className='btn bg-warning'  id='editbtn' onClick={()=>{openedit(data._id)}}>Edit</button>
                  
                  
-                  <button className='btn bg-danger text-light' onClick={()=>{deletetask(data._id)}}>Delete</button>
+                  <button className='btn bg-danger text-light' id='deletebtn' onClick={()=>{deletetask(data._id)}}>Delete</button>
                 </td>
               
              </tr>
