@@ -1,6 +1,6 @@
 
 #container{
-    height:630px;
+    height:100%;
     display: flex;
     justify-content: center;
     
@@ -28,7 +28,7 @@
 
 #spinner-container{
     background-color: rgba(0, 0, 0, 0.2);
-   height:645px;
+   height:100%;
     position: absolute;
     display: flex;
     justify-content: center;
