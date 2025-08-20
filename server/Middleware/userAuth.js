@@ -4,9 +4,7 @@ const joi=require("joi")
 const SignupMiddleware=async(req,res,next)=>{
     const Schema=joi.object({
          username:joi.string().min(3).max(100).required(),
-         email:joi.string().email({tlds:false
-            
-         }).required(),
+         email:joi.string().email().required(),
          password:joi.string().min(4).max(50).required()
     })
 
