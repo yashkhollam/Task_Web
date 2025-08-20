@@ -4,10 +4,10 @@ const joi=require("joi")
 const SignupMiddleware=async(req,res,next)=>{
     const Schema=joi.object({
          username:joi.string().min(3).max(100).required(),
-         email:joi.string().email({minDomainSegments:2,tlds:{allow:true}}).required(),   //minDomainSegments: 2 → requires at least "gmail.com" (one @ + two domain parts).
-// tlds: { allow: true } → requires a
+         email:joi.string().pattern(/^[\w._%+-]+@[A-Za-z0-9.-]+\.(com|in|org)$/i).required(),   //minDomainSegments: 2 → requires at least "gmail.com" (one @ + two domain parts).
+// tlds: { allow: ['com','in','org'] } → requires a
 
-// real.com,.org,.net,.in, etc.
+// real.com,.org,.in, etc.
 
 // So gmail alone fails, but gmail. com passes
          password:joi.string().min(4).max(50).required()
