@@ -6,10 +6,12 @@ function ProtectedRoutes({children}) {
     const {auth}=useContext(AuthContext)
     
         
-
-        if(!auth.username&&!auth.token){
+          if(!auth.username&&!auth.token){
           return <Navigate to={'/login'} replace/>
         }
+      
+
+       
    
   return (
     <>{children}</>

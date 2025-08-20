@@ -38,11 +38,11 @@ const gettaskbyID=async(req,res)=>{
         })
    }
    catch(err){
-    console.log(err)
+    // console.log(err)
      return res.status(500).json({
             success:false,
-            message:"Failed to get task by ID",
-            
+            message:err.message||"Failed to get task by ID",
+
         })
    }
 }
@@ -59,10 +59,10 @@ const gettaskbyuserID=async(req,res)=>{
         })
    }
    catch(err){
-    console.log(err)
+    // console.log(err)
      return res.status(500).json({
             success:false,
-            message:"Failed to get task by ID",
+            message:err.message||"Failed to get task by ID",
             
         })
    }
@@ -70,7 +70,7 @@ const gettaskbyuserID=async(req,res)=>{
 
 const createtask=async(req,res)=>{
     try{
-       console.log(req.user.userID)
+    //    console.log(req.user.userID)
         const {task,deadline}=req.body
         
 
@@ -96,7 +96,7 @@ const createtask=async(req,res)=>{
         console.log(err)
         return res.status(500).json({
                 success:false,
-                message:err.message
+                message:err.message ||"Internal server problem"
             })
     }
 }
@@ -116,10 +116,10 @@ const updatetask=async(req,res)=>{
 
     }
     catch(err){
-        console.log(err)
+        // console.log(err)
         return res.status(500).json({
                 success:false,
-                message:"Internal server problem"
+                message:err.message ||"Internal server problem"
             })
     }
 }
@@ -137,10 +137,10 @@ const deletetask=async(req,res)=>{
     }
 
 catch(err){
-    console.log(err)
+    // console.log(err)
     return res.status(500).json({
         success:false,
-        message:"Internal server problem"
+        message:err.message ||"Internal server problem"
     })
 }
 }

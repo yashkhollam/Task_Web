@@ -4,7 +4,7 @@ const jwt=require('jsonwebtoken')
 
 const Signup=async(req,res)=>{
     const {username,email,password}=req.body
-    console.log(username)
+    // console.log(username)
 
     try{
     const user=await user_Model.findOne({email})
@@ -29,7 +29,7 @@ const Signup=async(req,res)=>{
    
 }
 catch(err){
-    console.log(err)
+    // console.log(err)
     return res.status(500).json({
         success:false,
         message:"Internal server Problem",
@@ -44,7 +44,7 @@ const Login=async(req,res)=>{
   try{
     const {email,password}=req.body
 
-    console.log("req.body=>",req.body)
+    // console.log("req.body=>",req.body)
     
 
     
@@ -84,7 +84,12 @@ const Login=async(req,res)=>{
     
 }
 catch(err){
-    console.log(err)
+    return res.status(500).json({
+        success:false,
+        message:err.message ||"Internal server problem",
+       // console.log(err)
+    }) 
+    
 }
 }
 

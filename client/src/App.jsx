@@ -1,9 +1,9 @@
 
 import './App.css'
 import {BrowserRouter,Route, Routes} from 'react-router-dom'
-import CreateTask from './Component/createTask'
+
 import Home from './Component/Home'
-import UpdateTask from './Component/update'
+
 import {Toaster} from 'react-hot-toast'
 import Navbar from './Component/Navbar'
 import Signup from './Component/Signup'
@@ -31,8 +31,7 @@ function App() {
        
         
         }/>
-        <Route path='/createtask' element={<CreateTask/>}/>
-        <Route path='/updatetask/:id' element={<UpdateTask/>}/>
+        
 
         <Route path='/signup' element={<Signup/>}/>
          <Route path='/login' element={<Login/>}/>

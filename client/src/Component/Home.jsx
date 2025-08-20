@@ -26,14 +26,16 @@ function Home() {
   //fetch the task
      const fetchtask=async()=>{
   try{
-     const response=await axios.get(`http://localhost:8989/task/gettaskbyuserID`,{
+    //  const response=await axios.get(`http://localhost:8989/task/gettaskbyuserID`,{
+
+    const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/task/gettaskbyuserID`,{
     
       headers:{
         Authorization:`Bearer ${auth.token}`
       }
     })
 
-    console.log(response.data.data)
+    // console.log(response.data.data)
 
     setTask(response.data.data)
     return(response.data.data)
@@ -41,7 +43,8 @@ function Home() {
     
   }
   catch(err){
-    console.log(err)
+    // console.log(err)
+    toast.error(err?.message.data[0].message)
   }
 }
 
@@ -54,7 +57,7 @@ useEffect(()=>{
 //create task
 
   const handleinput=(e)=>{
-    console.log({...iscreateTask,[e.target.name]:e.target.value})
+    // console.log({...iscreateTask,[e.target.name]:e.target.value})
     issetCreateTask({...iscreateTask,[e.target.name]:e.target.value})
   }
 
@@ -65,7 +68,10 @@ useEffect(()=>{
     try{
     
     const token= localStorage.getItem('token')
-    const response= await axios.post(`http://localhost:8989/task/create`,iscreateTask,{
+    // const response= await axios.post(`http://localhost:8989/task/create`,iscreateTask,{
+   
+    const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/task/create`,iscreateTask,{
+
     headers:{
       Authorization:`Bearer ${token}`,
     }
@@ -79,7 +85,7 @@ useEffect(()=>{
     await fetchtask()
   }
   catch(err){
-    console.log(err)
+    // console.log(err)
   
      toast(err.response?.data.message,{
     icon:"⚠️" 
@@ -96,7 +102,9 @@ const  openedit=async(id)=>{
         setIseditdialogopen(!iseditdialogopen)
         setIseditid(id)
 
-           const response=await axios.get(`http://localhost:8989/task/gettaskbyID/${id}`)
+          //  const response=await axios.get(`http://localhost:8989/task/gettaskbyID/${id}`)
+
+          const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/task/gettaskbyID/${id}`)
 
   const data=response.data.data;
   setIsupdateTask({task:data.task,deadline:data.deadline})
@@ -105,7 +113,8 @@ const  openedit=async(id)=>{
    
 }
     catch(err){
-      console.log(err)
+      // console.log(err)
+      toast.error(err?.message.data[0].message)
     }
   }
 
@@ -117,7 +126,7 @@ const handleupdate=(e)=>{
     setIsupdateTask({...isupdateTask,[e.target.name]:e.target.value})
   }
   catch(err){
-    console.log(err)
+   toast.error(err?.message.data[0].message)
   }
 }
 
@@ -125,14 +134,16 @@ const submitupdatedata=async(e)=>{
   e.preventDefault()
  
  try{
-     await axios.patch(`http://localhost:8989/task/updatedtask/${editID}`,isupdateTask)
+    //  await axios.patch(`http://localhost:8989/task/updatedtask/${editID}`,isupdateTask)
+
+    const response= await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/task/updatedtask/${editID}`,isupdateTask)
 
    toast.success("update successfully")
    setIseditdialogopen(false)//close dialog
    await fetchtask()
  }
  catch(err){
-  console.log(err)
+  toast.error(err?.message.data[0].message)
  }
 }
 
@@ -146,8 +157,8 @@ const submitupdatedata=async(e)=>{
 
   const deletetask=async(taskid)=>{
     try{
-       const response= await axios.delete(`http://localhost:8989/task/deletetask/${taskid}`)
-      
+      //  const response= await axios.delete(`http://localhost:8989/task/deletetask/${taskid}`)
+       const response= await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/task/deletetask/${taskid}`)
 
        setTask(prev=>prev.filter((item)=>item._id!==taskid))
        
@@ -155,7 +166,8 @@ const submitupdatedata=async(e)=>{
        toast.success(message)
     }
     catch(err){
-      console.log(err)
+      // console.log(err)
+      toast.error(err?.message.data[0].message)
      
     }
   
@@ -186,33 +198,38 @@ const submitupdatedata=async(e)=>{
   return (
    <>
 
-  <div className="container mt-2" >
+  <div className="container mt-0 " >
     <div className="row " >
       <div className="col-12  " id='col-container'>
        
-       <div className='input-container ' id='input-container'>
+       <div className='input-container d-flex gap-3' id='input-container'>
 
        
         <input type="text" 
        
         placeholder='Add the Task'
-        className='form-control p-3' style={{height:"50px",maxWidth:"500px"}}
+        className='form-control p-3' style={{height:"40px",maxWidth:"500px"}}
         onChange={handleinput}
         name='task'
         value={iscreateTask.task}/>
 
 
-
+      <div className="input-container-date d-flex  gap-2">
+        <span className="d-inline d-md-none " style={{fontSize:"1.6rem"}}>📅</span>
+     
         <input type="date"
          required
-         className='form-control'  style={{height:"50px", width:"170px"}}
+         placeholder='Add the Deadline'
+         className='form-control p-3' 
+          style={{height:"40px", maxWidth:"150px"}}
           onChange={handleinput}
           name='deadline'
           
           value={iscreateTask.deadline}
           />
+        </div>
 
-         <button className='btn bg-success text-light h-100 fs-4 p-2' type='button' onClick={createtask}>Create</button>
+         <button className='btn' type='button' id='createbtn' onClick={createtask}>Create</button>
 
 
        </div> 
@@ -250,10 +267,10 @@ const submitupdatedata=async(e)=>{
                  
                 
                  
-                  <button className='btn bg-warning' onClick={()=>{openedit(data._id)}}>Edit</button>
+                  <button className='btn bg-warning'  id='editbtn' onClick={()=>{openedit(data._id)}}>Edit</button>
                  
                  
-                  <button className='btn bg-danger text-light' onClick={()=>{deletetask(data._id)}}>Delete</button>
+                  <button className='btn bg-danger text-light' id='deletebtn' onClick={()=>{deletetask(data._id)}}>Delete</button>
                 </td>
               
              </tr>

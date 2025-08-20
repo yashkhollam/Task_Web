@@ -17,6 +17,12 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors())
 
+app.use(cors({
+  origin: "*", // or your frontend URL
+  methods: ["GET","POST","PUT","DELETE"],
+  credentials: true
+}));
+
 
 app.get('/',(req,res)=>{
     res.status(200).json({

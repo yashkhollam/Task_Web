@@ -15,18 +15,21 @@ function Signup() {
   }
 
   const [input,setinput]=useState(data)
+   const [isloading,setIsloading]=useState(false)
 
   const handleinput=async(e)=>{
     const {name,value}=e.target
-   console.log({...input,[name]:value})
+  //  console.log({...input,[name]:value})
    setinput({...input,[name]:value})
   }
 
   const submitform=async(e)=>{
   e.preventDefault()
   try{
-       const response=await axios.post("http://localhost:8989/auth/signup",input)
-      
+      setIsloading(true)
+      //  const response=await axios.post("http://localhost:8989/auth/signup",input)
+
+      const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`,input)
 
      const {message}=response.data
      toast.success(message)
@@ -40,28 +43,39 @@ function Signup() {
 
   }
   catch(err){
-    console.log(err)
+    const message=err?.response?.data?.message
+    toast.error(message,{
+      icon:"⚠️"
+    })
 
-    const message=err?.response?.data[0]?.message
-   console.log(message)
-   
-  //   toast(message,{
-  //     icon:"⚠️"
-  //   })
+    setIsloading(false)
    }
   }
 
 
   return (
    <>
-   <div className="container min-vh-100 border d-flex  justify-content-center align-items-center">
+
+  {
+
+isloading&&
+ <div id='spinner-container'>
+    
+    <div class="spinner-border" role="status" id='spinner'></div>
+
+ </div>
+}
+
+   <div className="container"  id='container'>
    
-    <div className="row w-100 mt-3  shadow rounded" style={{minHeight:"500px",maxWidth:"500px",marginBottom:"120px"}}>
-     
-      <div className="col-12">
+    <div className="row w-100 mt-5 rounded shadow "  style={{minHeight:"500px",maxWidth:"400px",marginBottom:"150px"}}>
+        
+
+      <div className="col-12 p-0 m-0"  >
+      
        
-        <form className='form p-2' onSubmit={submitform}>
-           <h1 className='text-center mt-4'>Create Account</h1>
+        <form className='form  p-4' onSubmit={submitform} >
+           <h2 className='text-center p-2'>Create Account</h2>
         
            <label className='form-label mt-4' style={{fontSize:"1.3rem"}}>Username :</label>
            <input type="text"
@@ -73,6 +87,7 @@ function Signup() {
              <label className='form-label mt-2' style={{fontSize:"1.3rem"}}>Email :</label>
            <input type="email"
                   name="email"
+                  
                   value={input.email}
                    onChange={handleinput}
                   className='form-control' />
