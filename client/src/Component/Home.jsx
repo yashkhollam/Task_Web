@@ -19,9 +19,15 @@ function Home() {
   const [iscreateTask,issetCreateTask]=useState(data)
   const [isupdateTask,setIsupdateTask]=useState(data)
  const [editID,setIseditid]=useState(null)
+ const [searchtask,setSearchitem]=useState("")
 
 
-  
+
+  const handlesearch=(e)=>{
+    setSearchitem(e.target.value)
+  }
+
+  const  filtereditem=task.filter((item)=>item.task.toLowerCase().includes(searchtask.toLowerCase()))
   
   //fetch the task
      const fetchtask=async()=>{
@@ -57,7 +63,7 @@ useEffect(()=>{
 //create task
 
   const handleinput=(e)=>{
-    // console.log({...iscreateTask,[e.target.name]:e.target.value})
+   
     issetCreateTask({...iscreateTask,[e.target.name]:e.target.value})
   }
 
@@ -66,7 +72,10 @@ useEffect(()=>{
 
   const createtask=async()=>{
     try{
-    
+     
+     
+  
+      
     const token= localStorage.getItem('token')
     // const response= await axios.post(`http://localhost:8989/task/create`,iscreateTask,{
    
@@ -113,7 +122,7 @@ const  openedit=async(id)=>{
    
 }
     catch(err){
-      // console.log(err)
+
       toast.error(err?.message.data[0].message)
     }
   }
@@ -138,7 +147,8 @@ const submitupdatedata=async(e)=>{
 
     const response= await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/task/updatedtask/${editID}`,isupdateTask)
 
-   toast.success("update successfully")
+   const{message}=response.data
+   toast.success(message)
    setIseditdialogopen(false)//close dialog
    await fetchtask()
  }
@@ -166,7 +176,7 @@ const submitupdatedata=async(e)=>{
        toast.success(message)
     }
     catch(err){
-      // console.log(err)
+     
       toast.error(err?.message.data[0].message)
      
     }
@@ -176,20 +186,6 @@ const submitupdatedata=async(e)=>{
 
   }
 
-  // const navigate=useNavigate()
-
-  // const gotoupdatetask=(task_id)=>{
-  //   navigate(`/updatetask/${task_id}`)
-  // }
-
-  // const gotoupdatetask=(task_id)=>{
-  //   try{
-  //       setIseditdialogopen(!iseditdialogopen)
-  //   }
-  //   catch(err){
-  //     console.log(err)
-  //   }
-  // }
 
 
 
@@ -204,9 +200,14 @@ const submitupdatedata=async(e)=>{
        
        <div className='input-container d-flex gap-3' id='input-container'>
 
-       
+       <input type="text"
+              className='form-control'
+               placeholder='Search Task'
+               value={searchtask} 
+               onChange={handlesearch}/>
+
+
         <input type="text" 
-       
         placeholder='Add the Task'
         className='form-control p-3' style={{height:"40px",maxWidth:"500px"}}
         onChange={handleinput}
@@ -256,8 +257,8 @@ const submitupdatedata=async(e)=>{
         
           
          {
-          Array.isArray(task)&&task.length>0?(
-           task.map((data)=>(
+          Array.isArray(filtereditem)&&filtereditem.length>0?(
+           filtereditem.map((data)=>(
              <tr key={data._id}>
               
                 <td>{data.task}</td>
@@ -310,18 +311,19 @@ const submitupdatedata=async(e)=>{
                     iseditdialogopen &&
                     <div className="" id='edit-container'>
                      <h1 className='mt-4 text-center' >Update Task</h1>
-                    <form onSubmit={submitupdatedata}>
-                      <label className='form-label fs-4 ms-3'>Task :</label>
+                   
+                    <form onSubmit={submitupdatedata} className='p-4'>
+                      <label className='form-label fs-4 '>Task :</label>
                       <input type="text"
-                             className='form-control ms-3'
+                             className='form-control '
                              style={{maxWidth:"380px"}} 
                              onChange={handleupdate}
                              value={isupdateTask.task}
                              name='task'/>
 
-                      <label className='form-label fs-4 mt-4 ms-3'>Deadline :</label>
+                      <label className='form-label fs-4 mt-4 '>Deadline :</label>
                       <input type="date"
-                             className='form-control ms-3'
+                             className='form-control '
                              style={{maxWidth:"380px"}}
                               onChange={handleupdate}
                              value={isupdateTask.deadline}
